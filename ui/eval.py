@@ -2,12 +2,59 @@ import flet as ft
 
 
 class infoControl(ft.Tabs):
-    def __init__(self,display):
+    def __init__(self,display,modelshares):
         super().__init__()
+        self.modelshares = modelshares
+        self.tabs = [
+            ft.Tab(
+                text="Settings",
+                content=ft.Column(
+                    controls = [
+                            ft.Container(
+                            height = 20,
+                            content=ft.Row(
+                                controls=[ft.Text('settings')]
+                            )
+                        ),
+                    ]
+                )
+            ),
+            ft.Tab(
+                text="Info",
+                content=ft.Column(
+                    controls = [
+                            ft.Container(
+                            height = 20,
+                            content=ft.Row(
+                                controls=[ft.Text('camera info')]
+                            )
+                        ),
+                    ]
+                )
+            )]
+
 
 class displayControl(ft.Row):
     def __init__(self,):
         super().__init__()
+        self.icon_height = 50
+        self.icon_width = 50
+        self.border_radius = 10
+        self.viewarea_1 = ft.Image(
+                src=f"./assets/camera-310.png",
+                fit=ft.ImageFit.CONTAIN,
+                height=self.icon_height,
+                width = self.icon_width,
+            )
+        self.controls = [ft.Container(
+                            height = 600,
+                            width = 800,
+                            border_radius=5,
+                            bgcolor= ft.colors.PRIMARY_CONTAINER,
+                            alignment=ft.alignment.center,
+                            content = self.viewarea_1
+                            ),]
+        
 
 class modelSelectControl(ft.Row):
     def __init__(self,display):
@@ -62,12 +109,18 @@ class modelSelectControl(ft.Row):
                          ]
         
     def load_model(self,e):
-        pass
+        print(f'load model')
         
     def select_device(self,e):
-        pass
+        
+        print(f'select device')
+        
+        
     def run_algo(self,e):
-        pass
+        print(f'run algo')
+    
+    
+    
     def open_device(self,e):
         print(f'model loaded')
         
@@ -82,7 +135,7 @@ class EvalPage(ft.Container):
         self.model_shares = model_shares
         self.display_control = displayControl()
         self.model_select_control = modelSelectControl(self.display_control)
-        self.info_control = infoControl(self.display_control)
+        self.info_control = infoControl(self.display_control,self.model_shares)
         
         self.content = ft.Container(
             
@@ -96,13 +149,31 @@ class EvalPage(ft.Container):
                         border_radius=5,
                         padding=5,
                         ),
-                        ft.Row(
-                            controls=[self.display_control, 
-                                    self.info_control]
-                            
-                        )]
-                )
+                    ft.Container(
+                        width = 1100,
+                        height = 550,
+                        alignment=ft.alignment.center,
+                        content = ft.Row(
+                            controls=[
+                                self.display_control, 
+                                
+                                ft.Container(
+                                    height = 600,
+                                    width = 280,
+                                    border_radius=5,
+                                    bgcolor= ft.colors.PRIMARY_CONTAINER,
+                                    alignment=ft.alignment.center,
+                                    content = self.info_control
+                                    )
+                                ]
+                        ),
+                        bgcolor=ft.colors.SECONDARY,
+                        border_radius=5,
+                        padding=5,
+                        ),
+                ]
             )
+        )
         
 
     

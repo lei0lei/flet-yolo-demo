@@ -1,45 +1,6 @@
 import flet as ft
 from ui.models import ModelShares
-import os, platform, subprocess, re
 
-
-
-
-
-def check_cpu():
-    if platform.system() == "Windows":
-        return platform.processor()
-
-
-def check_gpu():
-    pass
-
-def check_cuda_version():
-    pass
-
-
-
-def check_yolo():
-    pass
-
-
-def check_models():
-    pass
-
-def warmup_yolo_cpu():
-    pass
-
-def warmup_yolo_gpu():
-    pass
-
-def warmup_yolo_multi_gpu():
-    pass
-
-def onclick_to_install_yolov8():
-    pass
-
-def onclick_to_install_yolov5():
-    pass
 
 
 def hardware_check_control():
