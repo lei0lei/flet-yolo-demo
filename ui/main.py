@@ -7,7 +7,7 @@ from ui.settings import SettingsPage
 from ui.eval import EvalPage
 from ui.analyze import AnalyzePage
 from ui.models import ModelShares
-
+from ui.annotate import AnnotatePage
 
 class DefaultMainPage(ft.Container):
     def __init__(self):
@@ -18,6 +18,7 @@ class DefaultMainPage(ft.Container):
         self.train_page = TrainPage(self.model_shares)
         self.settings_page = SettingsPage(self.model_shares)
         self.eval_page = EvalPage(self.model_shares)
+        self.annotate_page = AnnotatePage()
         
         
     def change_page(self,page_name):
@@ -36,13 +37,18 @@ class DefaultMainPage(ft.Container):
         if page_name == 'analyze':
             self.content=self.analyze_page
             self.page.update()
+        if page_name == 'annotate':
+            self.content=self.annotate_page
+            self.page.update()
+
 
 def main(page: ft.Page):
     page_list = ['/check',
                  '/train',
                  '/eval',
                  '/settings',
-                 '/analyze']
+                 '/analyze',
+                 '/annotate']
     default_mainpage = DefaultMainPage()
     rail = ft.NavigationRail(
         selected_index=0,
@@ -77,6 +83,11 @@ def main(page: ft.Page):
                 selected_icon_content=ft.Icon(ft.icons.ANALYTICS),
                 label_content=ft.Text("analyze"),
             ),
+            ft.NavigationRailDestination(
+                icon=ft.icons.DRAW_OUTLINED,
+                selected_icon_content=ft.Icon(ft.icons.DRAW_ROUNDED),
+                label_content=ft.Text("annotate"),
+            ),
         ],
         on_change=lambda e: page.go(page_list[e.control.selected_index])
     )
@@ -106,6 +117,9 @@ def main(page: ft.Page):
     )
 
     page.on_route_change = route_change
+    page.fonts = {
+        "Roboto Mono": "RobotoMono-VariableFont_wght.ttf",
+    }
     print(f"Initial route: {page.route}")
     page.go(page.route)
 
